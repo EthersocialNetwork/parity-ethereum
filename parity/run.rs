@@ -215,11 +215,15 @@ fn execute_light_impl(cmd: RunCmd, logger: Arc<RotatingLogger>) -> Result<Runnin
 
 	// start on_demand service.
 	let on_demand = Arc::new({
-		let mut on_demand = ::light::on_demand::OnDemand::new(cache.clone());
-		on_demand.default_retry_number(cmd.on_demand_retry_count.unwrap_or(::light::on_demand::DEFAULT_RETRY_COUNT));
-		on_demand.query_inactive_time_limit(cmd.on_demand_inactive_time_limit.map(Duration::from_millis)
-																				.unwrap_or(::light::on_demand::DEFAULT_QUERY_TIME_LIMIT));
-		on_demand
+		let num_of_queries_per_request = cmd.on_demand_retry_count.unwrap_or(::light::on_demand::DEFAULT_QUERY_ATTEMPTS);
+		let min_request_interval = Duration::from_secs(10);
+		let max_request_interval = cmd.on_demand_inactive_time_limit
+			.map_or_else(
+				|| ::light::on_demand::DEFAULT_MAX_REQUEST_INTERVAL,
+				|t| Duration::from_millis(t)
+			);
+
+		::light::on_demand::OnDemand::new(cache.clone(), num_of_queries_per_request, min_request_interval, max_request_interval)
 	});
 
 	let sync_handle = Arc::new(RwLock::new(Weak::new()));
