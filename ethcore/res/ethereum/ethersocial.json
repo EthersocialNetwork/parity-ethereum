@@ -60,6 +60,14 @@
     "enode://52e5e84d44bbda7e24a92826e60dfeb20a5d840c3c0be646b21940d7648f49a91bff2b7c47d37894b962eb183d8c7f71f693efb8534ee170ccd902addd487970@52.226.16.248:50505"
   ],
   "accounts": {
+    "0000000000000000000000000000000000000001": { "builtin": { "name": "ecrecover", "pricing": { "linear": { "base": 3000, "word": 0 } } } },
+    "0000000000000000000000000000000000000002": { "builtin": { "name": "sha256", "pricing": { "linear": { "base": 60, "word": 12 } } } },
+    "0000000000000000000000000000000000000003": { "builtin": { "name": "ripemd160", "pricing": { "linear": { "base": 600, "word": 120 } } } },
+    "0000000000000000000000000000000000000004": { "builtin": { "name": "identity", "pricing": { "linear": { "base": 15, "word": 3 } } } },
+    "0000000000000000000000000000000000000005": { "builtin": { "name": "modexp", "activate_at": 600000, "pricing": { "modexp": { "divisor": 20 } } } },
+    "0000000000000000000000000000000000000006": { "builtin": { "name": "alt_bn128_add", "activate_at": 600000, "pricing": { "linear": { "base": 500, "word": 0 } } } },
+    "0000000000000000000000000000000000000007": { "builtin": { "name": "alt_bn128_mul", "activate_at": 600000, "pricing": { "linear": { "base": 40000, "word": 0 } } } },
+    "0000000000000000000000000000000000000008": { "builtin": { "name": "alt_bn128_pairing", "activate_at": 600000, "pricing": { "alt_bn128_pairing": { "base": 100000, "pair": 80000 } } } }, 
     "0x0015aC7f8BB2a2c7D954FC2dBd4e20c0db5942a5": {
       "balance": "1000000000000000000000000"
     },
